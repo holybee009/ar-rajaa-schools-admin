@@ -63,6 +63,8 @@ const AddCalender = () =>{
         }
       };
 
+      console.log(calendarData);
+      
     //   post school calendar
     const addSchoolCalendar = async () =>{
 
@@ -104,11 +106,11 @@ const AddCalender = () =>{
           ))}
         </div>
       </div>
-        <Button href="#" children="add new schedule" className="capitalize cursor-pointer border-[#00000080]"
+        <Button href="#" text="add new schedule" className="capitalize cursor-pointer border-[#00000080]"
             color="#000"       // Black text color
             bgColor="#fff" onClick={addNewChild}/>
         {message && <div className="mt-4 text-red-500">{message}</div>}
-        <Button href="#" children="add school calendar" className="absolute bottom-3 w-full inset-x-0" onClick={addSchoolCalendar}/>
+        <Button href="#" text="add school calendar" className="absolute bottom-3 w-full inset-x-0" onClick={addSchoolCalendar}/>
         </>
     )
 }

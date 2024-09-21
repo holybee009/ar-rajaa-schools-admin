@@ -115,9 +115,8 @@ const AddRecent = ({editRecentId,updateUI}: Props) => {
         <div className="mt-2 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
           <Upload uploadFile={uploadFile} isMultiple={true}/>
           {error.second ? <p>This field is required</p> : activityPhotos.length > 0 && activityPhotos.map(link => 
-            <div className="relative w-full h-24"> 
+            <div className="relative w-full h-24"  key={link}> 
             <Image
-                key={link}
                 src={link}
                 alt="Description"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

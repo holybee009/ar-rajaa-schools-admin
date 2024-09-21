@@ -20,7 +20,7 @@ interface Error{
   state: boolean;
   message: string;
 }
-const Page: React.FC = () => {
+const LoginPage: React.FC = () => {
   const [loginInput, setLoginInput] = useState<logs>({
     username: "",
     password: "",
@@ -72,14 +72,16 @@ const Page: React.FC = () => {
       setSecondInputError({ state: true, message: "this field is required" });
     } else if (loginInput.username !== "" && loginInput.password !== "") {
       try {
-        const {data} = await axios.post(`${API_BASE_URL}/login`, loginInput);
+        const response = await axios.post(`${API_BASE_URL}/login`, loginInput);
         setAuthenticated(true);
-        alert(data.message)
+        alert(response.data.message)
+        console.log(response);
+        
             // Save the token in local storage
-        localStorage.setItem('token', data.token);
-        console.log(data.token);
+        localStorage.setItem('token', response.data.token);
+        // console.log(data.token);
           // Set token and redirect
-        login(data.token);
+        login(response.data.token);
         router.push('/');
       } catch (error) {
         // Type assertion to AxiosError
@@ -87,8 +89,8 @@ const Page: React.FC = () => {
   
         if (axiosError.response) {
           // Server responded with a status code that falls out of the range of 2xx
-          console.log(axiosError.response.data);
-          alert(axiosError.response.data);
+          // console.log(axiosError.response.data);
+          alert("incorrect password");
         } else if (axiosError.request) {
           // Request was made but no response was received
           console.log(axiosError.request);
@@ -149,7 +151,6 @@ const Page: React.FC = () => {
           <div className="capitalize hover:underline hover:text-red-500 cursor-pointer">forgot password</div>
         </div>
         <Button
-          width="1000"
           href="#"
           text="log in"
           color="#EE3A57"
@@ -161,4 +162,4 @@ const Page: React.FC = () => {
   );
 };
 
-export default Page;
+export default LoginPage;

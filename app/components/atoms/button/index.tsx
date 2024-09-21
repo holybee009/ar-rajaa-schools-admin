@@ -8,7 +8,7 @@ interface ButtonProps {
   bgColor?: string;     // New prop for background color
   radius?: string;
   href: string;
-  children: string;
+  text: string;
   className?: string;
   onClick?: () => void;
 }
@@ -21,7 +21,7 @@ const Button = ({
   href,
   onClick,
   className,
-  children,
+  text,
 }: ButtonProps) => {
   return (
     <Link
@@ -35,7 +35,9 @@ const Button = ({
       href={href}
       onClick={onClick}
     >
-      {children}
+      <div>
+       {text}
+      </div>
     </Link>
   );
 };
