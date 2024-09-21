@@ -60,7 +60,7 @@ const AddAcknowledgement = () => {
             />
           ) : <p>{error}</p> }
           </div>
-        <Button children="update acknowledgement" href="#" onClick={handleUpdate} className="mt-5"/>
+        <Button text="update acknowledgement" href="#" onClick={handleUpdate} className="mt-5"/>
         </div>
         </>
     )
