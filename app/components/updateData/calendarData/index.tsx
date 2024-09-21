@@ -128,18 +128,18 @@ const CalendarData = () => {
             )
         }
         <div className="flex absolute gap-3  w-full bottom-4 inset-x-0">
-            <Button href="#" children="delete" className="full" onClick={deletecalendar}/>
-            <Button href="#" children="back" className="w-full"  onClick={goBack}/>
+            <Button href="#" text="delete" className="full" onClick={deletecalendar}/>
+            <Button href="#" text="back" className="w-full"  onClick={goBack}/>
         </div>
         {<Modal show={deleteConfirmation} onClose={() => setDeleteConfirmation(false)}>
         <div>
           <p className="text-center">Are you sure you want to delete this post?</p>
           <p className="text-center mb-6 text-sm text-[#EE3A57]">This action cannot be undone!!!</p>
           <div className="flex justify-between gap-20">
-            <Button href="#" children="cancel"  className="capitalize cursor-pointer border-[#00000080]"
+            <Button href="#" text="cancel"  className="capitalize cursor-pointer border-[#00000080]"
             color="#000"       // Black text color
             bgColor="#fff"   onClick={() => setDeleteConfirmation(false)}/>
-            <Button href="#" children="delete" className="capitalize cursor-pointer w-3/4" onClick={() => deletePost(value)}/>
+            <Button href="#" text="delete" className="capitalize cursor-pointer w-3/4" onClick={() => deletePost(value)}/>
           </div>
         </div>
         </Modal>
