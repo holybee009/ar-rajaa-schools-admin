@@ -9,7 +9,7 @@ import withAuth from "../hoc/withAuth";
 
 
 
-const calendarPage = () => {
+const CalendarPage = () => {
   const [actSwitch, setActSwitch] = useState({ first: true, second: false });
   const handleSwitch = (val: string) => {
     val === "first"
@@ -38,4 +38,4 @@ const calendarPage = () => {
   );
 };
 
-export default withAuth(calendarPage);
+export default withAuth(CalendarPage);
