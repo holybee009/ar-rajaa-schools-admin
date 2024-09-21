@@ -69,6 +69,7 @@ const StaffData = ({data,loading,error, updateUI, onData, handleBack}: Props) =>
         {
         data.slice().reverse().map((datas) => 
          <StaffBlock 
+            key={datas._id}
             src={datas.uploadedFileUrl}
             title={datas.staffName}
             onEditClick={() => editStaff(datas._id)}
@@ -85,16 +86,17 @@ const StaffData = ({data,loading,error, updateUI, onData, handleBack}: Props) =>
           <p className="text-center">Are you sure you want to delete this post?</p>
           <p className="text-center mb-6 text-sm text-[#EE3A57]">This action cannot be undone!!!</p>
           <div className="flex justify-between gap-20">
-            <Button href="#" children="cancel"  className="capitalize cursor-pointer border-[#00000080]"
+            <Button href="#" text="cancel"  className="capitalize cursor-pointer border-[#00000080]"
             color="#000"       // Black text color
             bgColor="#fff"  onClick={() => setDeleteConfirmation(false)}/>
-            <Button href="#" children="delete" className="capitalize cursor-pointer w-3/4" onClick={() => deletePost(value)}/>
+            <Button href="#" text="delete" className="capitalize cursor-pointer w-3/4" onClick={() => deletePost(value)}/>
           </div>
         </div>
         </Modal>
       }
-      <Button href="#" children="back" onClick={() => handleBack()} className="absolute right-3 bottom-3 w-full inset-x-0"/>
+      <Button href="#" text="back" onClick={() => handleBack()} className="absolute right-3 bottom-3 w-full inset-x-0"/>
     </div>
 }
 
 export default StaffData;
+

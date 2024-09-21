@@ -36,7 +36,7 @@ const page = () => {
       />
         <div className="flex-grow py-2 px-4 sm:py-3 sm:px-6 md:py-5 md:px-10 bg-[#F8F8F8] border-box w-full sm:rounded-xl">
           {actSwitch.second === true ? (
-            <AddRecent editRecentId={editRecentId} updateUI={() => setReloadNews(true)}/>
+            <AddRecent editRecentId={editRecentId} updateUI={() => setReloadNews(!reloadNews)}/>
           ) : (
             <ActivitiesData onData={editRecentInfo} reloadNews={reloadNews}/>
           )}

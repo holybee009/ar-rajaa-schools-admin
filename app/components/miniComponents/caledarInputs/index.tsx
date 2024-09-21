@@ -1,5 +1,5 @@
 "use client"
-import React,{useState,ChangeEvent,useEffect} from "react";
+import React,{useState,ChangeEvent,useEffect, useCallback} from "react";
 import DatePickerComponent from "../datePicker";
 
 interface Props {
@@ -21,11 +21,17 @@ const CalendarInputs = ({scheduleData, error,index}: Props)  =>{
     const handleNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         setScheduleName(ev.target.value)
     }
+      
+ // Memoize the scheduleData function using useCallback
+ const memoizedScheduleData = useCallback(() => {
+    scheduleData(index, selectedNumber, startDate, endDate, scheduleName);
+  }, [index, selectedNumber, startDate, endDate, scheduleName]); // Add dependencies here
 
-    useEffect(()=>{
-        scheduleData(index,selectedNumber,startDate,endDate,scheduleName)
-    },[selectedNumber, startDate, endDate, scheduleName])
-
+  // useEffect that triggers the memoizedScheduleData function when dependencies change
+  useEffect(() => {
+    memoizedScheduleData(); // Call the memoized function
+  }, [memoizedScheduleData]); // Use the memoized function as a dependency
+  
     return (
       <>
       <div className="block lg:flex gap-4">

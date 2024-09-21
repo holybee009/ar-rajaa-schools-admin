@@ -20,7 +20,7 @@ interface Error{
   state: boolean;
   message: string;
 }
-const page: React.FC = () => {
+const Page: React.FC = () => {
   const [loginInput, setLoginInput] = useState<logs>({
     username: "",
     password: "",
@@ -151,7 +151,7 @@ const page: React.FC = () => {
         <Button
           width="1000"
           href="#"
-          children="log in"
+          text="log in"
           color="#EE3A57"
           className="capitalize border-none text-[white] w-full mt-3"
           onClick={loginAdmin}
@@ -161,4 +161,4 @@ const page: React.FC = () => {
   );
 };
 
-export default page;
+export default Page;

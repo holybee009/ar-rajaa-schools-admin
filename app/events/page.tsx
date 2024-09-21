@@ -16,7 +16,7 @@ interface ActiveState {
   calendar: boolean;
 }
 
-const page = () => {
+const Page = () => {
   const [active, setActive] = useState<ActiveState>({
     news: true,
     events: false,
@@ -61,7 +61,7 @@ const page = () => {
       />
       <div className="flex-grow py-2 px-4 sm:py-3 sm:px-6 md:py-5 md:px-10 bg-[#F8F8F8] border-box w-full sm:rounded-xl">
         {actSwitch.second === true ? (
-          <AddEvents editEventId={editEventId} updateUI={() => setReloadEvent(true)}/>
+          <AddEvents editEventId={editEventId} updateUI={() => setReloadEvent(!reloadEvent)}/>
         ) : (
           <EventData onData={editEventInfo} reloadEvent={reloadEvent}/>
         )}
@@ -70,4 +70,4 @@ const page = () => {
   );
 };
 
-export default withAuth(page);
+export default withAuth(Page);

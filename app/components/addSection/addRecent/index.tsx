@@ -87,15 +87,18 @@ const AddRecent = ({editRecentId,updateUI}: Props) => {
   }
 
   useEffect(() => {
-    if (!editRecentId){
-      return
+    if (!editRecentId) {
+      return;
     }
-    axios.get(`${API_BASE_URL}/activities` + editRecentId).then(response => {
-      const {data} = response;
-      setActivity(data.activity)
-      setActivityPhotos(data.activityPhotos)
-    })
-  },[editRecentId !== ""])
+  
+    axios.get(`${API_BASE_URL}/activities` + editRecentId).then((response) => {
+      const { data } = response;
+      setActivity(data.activity);
+      setActivityPhotos(data.activityPhotos);
+    });
+  }, [editRecentId, setActivity, setActivityPhotos]); // Add missing dependencies
+  
+
   const removePhoto =(value:string)=>{
     setActivityPhotos([...activityPhotos.filter(photo => photo !== value)])
   }
@@ -121,8 +124,6 @@ const AddRecent = ({editRecentId,updateUI}: Props) => {
                 layout="fill"
                 objectFit="cover"  // Use Tailwind's utility class for object-fit
                 className="absolute inset-0 rounded-xl"
-                // onMouseEnter={()=> setShowAction(true)}
-                // onMouseLeave={()=> setShowAction(false)}
             />
             <Image src={Delete} alt="delete" width={28} height={28} className="absolute bottom-0.5 bg-[#fff] bg-opacity-60 shadow-sm shadow-black rounded-full right-0.5 p-1.5" onClick={()=>removePhoto(link)}/>
           </div>
@@ -131,7 +132,7 @@ const AddRecent = ({editRecentId,updateUI}: Props) => {
         {/* {message && <p>{message}</p>} */}
         <Button
           href="#"
-          children={editRecentId !== "" ? "update activity" : "add activity"}
+          text={editRecentId !== "" ? "update activity" : "add activity"}
           className="border-none mt-3"
           onClick={() => handleSubmit()}
         />

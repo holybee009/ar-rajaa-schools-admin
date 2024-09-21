@@ -5,6 +5,7 @@ import Button from "../../atoms/button";
 import Modal from "../../miniComponents/modal";
 import Preview from "../../miniComponents/preview";
 import axios, {AxiosError} from "axios";
+import Image from "next/image";
 import DatePickerComponent from "../../miniComponents/datePicker";
 import { API_BASE_URL } from "@/config";
 
@@ -68,7 +69,7 @@ const AddNews = ({editId , updateUI}: Props) => {
     } else if (addedPhotos === ""){
       setThirdMessage("this field is required")
     } else {
-      setShowModal(true)
+     setAuthentication(true)
     }
   }
     // news data submission
@@ -116,15 +117,17 @@ const AddNews = ({editId , updateUI}: Props) => {
             
     
     useEffect(() => {
-      if (!editId){
-        return
+      if (!editId) {
+        return;
       }
-      axios.get(`${API_BASE_URL}/news` + editId).then(response => {
-        const {data} = response;
-        setNewsData({title: data.title, content: data.content})
-        setAddedPhotos(data.newsPhoto)
-      })
-    },[editId !== ""])
+    
+      axios.get(`${API_BASE_URL}/news` + editId).then((response) => {
+        const { data } = response;
+        setNewsData({ title: data.title, content: data.content });
+        setAddedPhotos(data.newsPhoto);
+      });
+    }, [editId, setNewsData, setAddedPhotos]); // Include missing dependencies
+    
  
   return (
     <>
@@ -148,15 +151,17 @@ const AddNews = ({editId , updateUI}: Props) => {
           <div className="hidden">
           <DatePickerComponent onChange={(date: Date | null) => setStartDate(date)} selected={startDate} />
           </div>
-          <div className="flex gap-8 items-start mb-4">
+          <div className="flex gap-8 items-center">
           <Upload uploadFile={uploadFile} isMultiple={false}/>
           {addedPhotos ? (
-             <div className="relative w-32 h-24"> 
-             <img
+             <div className="relative w-1/5 h-20"> 
+             <Image
                  src={addedPhotos}
                  alt="Description"
                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                 className="absolute top-0 inset-0 rounded-xl object-cover"
+                 layout="fill"
+                 objectFit="cover"  // Use Tailwind's utility class for object-fit
+                 className="absolute inset-0 rounded-xl"
              />
            </div>
           ) : <p>{thirdMessage}</p> }
@@ -164,9 +169,9 @@ const AddNews = ({editId , updateUI}: Props) => {
         </div>
         <Button
           href="#"
-          children="preview"
+          text="preview"
           className="border-none mt-3"
-          onClick={handleAuthentication}
+          onClick={authentication ? () => setShowModal(true) : handleAuthentication}
         />
         <Modal show={showModal} onClose={() => setShowModal(false)}>
           <Preview title={newsData.title} content={newsData.content} src={addedPhotos} onClick={submitNews} children={editId === "" ? "post news" : "update news"}/>

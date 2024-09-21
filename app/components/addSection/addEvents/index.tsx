@@ -78,16 +78,18 @@ useEffect(()=>{setEventsInputs({
 })},[])
 
 useEffect(() => {
-  if (!editEventId){
-    return
+  if (!editEventId) {
+    return;
   }
-  axios.get(`${API_BASE_URL}/event` + editEventId).then(response => {
-    const {data} = response;
-    console.log(data)
-    setEventsInputs({eventName: data?.eventName, eventVenue: data?.eventVenue})
-    setStartDate(data.date)
-  })
-},[editEventId !== ""])
+
+  axios.get(`${API_BASE_URL}/event` + editEventId).then((response) => {
+    const { data } = response;
+    console.log(data);
+    setEventsInputs({ eventName: data?.eventName, eventVenue: data?.eventVenue });
+    setStartDate(data.date);
+  });
+}, [editEventId, setEventsInputs, setStartDate]); // Include missing dependencies
+
 
   return (
     <div>
@@ -101,7 +103,7 @@ useEffect(() => {
       onChange={(ev) => handleChange(ev, "eventVenue")}/>
       <p className="capitalize">event date</p>
       <DatePickerComponent onChange={(date: Date | null) => setStartDate(date)} selected={startDate}/>
-      <Button children={editEventId === "" ? "add event" : "update event"} href="#" onClick={submitEventInfo}/>
+      <Button text={editEventId === "" ? "add event" : "update event"} href="#" onClick={submitEventInfo}/>
     </div>
   );
 };
