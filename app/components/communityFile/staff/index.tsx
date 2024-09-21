@@ -85,15 +85,16 @@ const onData = (val:string) =>{
   setStaffEditId(val)
 } 
 //  getting data of added classes
- useEffect (() => {
+useEffect(() => {
   const fetchData = async () => {
     const response = await axios.get(`${API_BASE_URL}/staff`);
-    const datas = response.data
-    const staffClasses =  datas.map((data: Data) => data.staffClass)
-    setStaffData(staffClasses)
-  }
-  fetchData()
- },[updateClass])
+    const datas = response.data;
+    const staffClasses = datas.map((data: Data) => data.staffClass);
+    setStaffData(staffClasses);
+  };
+
+  fetchData();
+}, [updateClass, setStaffData]); // Add setStaffData as a dependency
 
 
  
