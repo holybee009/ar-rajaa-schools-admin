@@ -7,7 +7,7 @@ import AddRecent from "../components/addSection/addRecent";
 import ActivitiesData from "../components/updateData/activitiesData";
 import withAuth from "../hoc/withAuth";
 
-const page = () => {
+const RecentPage = () => {
   const [actSwitch, setActSwitch] = useState({ first: true, second: false });
   const [editRecentId, setEditRecentId] = useState<string>('')
   const [reloadNews, setReloadNews] = useState<boolean>(false)
@@ -45,4 +45,4 @@ const page = () => {
   );
 };
 
-export default withAuth(page);
+export default withAuth(RecentPage);
