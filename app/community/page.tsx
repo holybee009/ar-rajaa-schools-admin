@@ -8,7 +8,7 @@ import StudentUI from "../components/communityFile/students";
 import withAuth from "../hoc/withAuth";
 
 
-const communityPage = () => {
+const CommunityPage = () => {
   const [actSwitch, setActSwitch] = useState({ first: true, second: false });
   const handleSwitch = (val: string) => {
     val === "first"
@@ -37,4 +37,4 @@ const communityPage = () => {
   );
 };
 
-export default withAuth(communityPage);
+export default withAuth(CommunityPage);
