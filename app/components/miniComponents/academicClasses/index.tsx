@@ -17,7 +17,7 @@ const AcademicClasses = ({classesData,studentsProfile, handleBack}:Props) => {
         {uniqueArray.length === 0 ? <h1>no classes yet</h1> :  
         uniqueArray.map((classes)=><div className="border border-black rounded-xl h-20 w-25 text-center flex items-center justify-center grow-1 capitalize" key={classes} onClick={() => studentsProfile(classes)}>{classes}</div>)}
     </div>
-    <Button href="#" children="back" onClick={() => handleBack()} className="absolute right-3 bottom-3 w-full inset-x-0"/>
+    <Button href="#" text="back" onClick={() => handleBack()} className="absolute right-3 bottom-3 w-full inset-x-0"/>
     </>
   );
 };
