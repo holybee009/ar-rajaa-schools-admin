@@ -105,7 +105,7 @@ const NewsData = ({onData, reloadNews} : Props) => {
           <div className="flex justify-between gap-20">
           <Button
             href="#"
-            children="Cancel"
+            text="Cancel"
             className="capitalize cursor-pointer border-[#00000080]"
             color="#000"       // Black text color
             bgColor="#fff"  // Green background color
@@ -113,7 +113,7 @@ const NewsData = ({onData, reloadNews} : Props) => {
           />
 
 
-            <Button href="#" children="delete" className="capitalize cursor-pointer w-3/4" onClick={() => deletePost(value)}/>
+            <Button href="#" text="delete" className="capitalize cursor-pointer w-3/4" onClick={() => deletePost(value)}/>
           </div>
         </div>
         </Modal>
