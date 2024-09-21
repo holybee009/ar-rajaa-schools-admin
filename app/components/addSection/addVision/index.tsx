@@ -60,7 +60,7 @@ const AddVision = () => {
             />
           ) : <p>{error}</p> }
           </div>
-        <Button children="update vision" href="#" onClick={handleUpdate} className="mt-5"/>
+        <Button text="update vision" href="#" onClick={handleUpdate} className="mt-5"/>
         </div>
         </>
         
