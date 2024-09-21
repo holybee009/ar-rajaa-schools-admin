@@ -168,7 +168,7 @@ useEffect(() => {
         {message && <p>{message}</p>}
         <Button
           href="#"
-          children={studentEditId !== "" ? "update student info" : "add student"}
+          text={studentEditId !== "" ? "update student info" : "add student"}
           className="border-none mt-3"
           onClick={handleSubmit}
         />
