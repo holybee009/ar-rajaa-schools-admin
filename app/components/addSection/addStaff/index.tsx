@@ -1,15 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Upload from "../../atoms/upload";
 import Button from "../../atoms/button";
 import axios from "axios";
 import Image from "next/image";
 import { API_BASE_URL } from "@/config";
 
+interface Props {
+    addClass: () => void
+    staffEditId: string
+}
 
-const AddStaff = () => {
-  const [staffName, setstaffName] = useState<string>("");
-  const [staffClass, setstaffClass] = useState<string>("");
+const AddStaff = ({addClass, staffEditId}: Props) => {
+  const [staffName, setStaffName] = useState<string>("");
+  const [staffClass, setStaffClass] = useState<string>("");
   const [uploadedFileUrl, setUploadedFileUrl] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [firstError, setFirstError] = useState<boolean>(false);
@@ -52,9 +56,24 @@ const AddStaff = () => {
   })
   }
 
+//   get staff data for edit
+useEffect(() => {
+  if (!staffEditId) {
+    return;
+  }
+
+  axios.get(`${API_BASE_URL}/staff` + staffEditId).then((response) => {
+    const { data } = response;
+    setSelectedYear(data.selectedYear);
+    setStaffName(data.staffName);
+    setStaffClass(data.staffClass);
+    setUploadedFileUrl(data.uploadedFileUrl);
+  });
+}, [staffEditId, setSelectedYear, setStaffName, setStaffClass, setUploadedFileUrl]); // Include missing dependencies
+
 
 //   submit staff details
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
    if(staffName === "") {
     setFirstError(true)
    } else if (staffClass === "") {
@@ -62,7 +81,46 @@ const AddStaff = () => {
    } else if (uploadedFileUrl === ""){
     setMessage("add a file")
    } else {
-    axios.post(`${API_BASE_URL}/staff`, {selectedYear, staffName, staffClass, uploadedFileUrl});
+    try {
+        if (staffEditId !== "") {
+          // Editing staff information
+         const response = await axios.put(`${API_BASE_URL}/staff`, { id: staffEditId, selectedYear, staffName, staffClass, uploadedFileUrl });
+         console.log('Update successful:', response.data);
+         alert(response.data)
+        } else {
+          // Posting staff information
+          const request = await axios.post(`${API_BASE_URL}/staff`, {selectedYear, staffName, staffClass, uploadedFileUrl});
+          request && addClass();
+          alert(request.data)
+        }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+          // Axios-specific error handling
+          if (error.response) {
+            // Server responded with a status code that falls out of the range of 2xx
+            console.error('Server Error:', error.response.data);
+            alert(`Server Error: ${error.response.data}`);
+          } else if (error.request) {
+            // Request was made but no response was received
+            console.error('Network Error:', error.request);
+            alert('Network Error: No response received from server');
+          } else {
+            // Something happened in setting up the request that triggered an error
+            console.error('Error', error.message);
+            alert(`Error: ${error.message}`);
+          }
+        } else {
+          // Non-Axios error
+          console.error('Error:', error);
+          alert('An unexpected error occurred.');
+        }
+      } finally {
+        setStaffClass("")
+        setStaffName("")
+        setUploadedFileUrl("")
+      }
+      
+    
    }
   }
   return (
@@ -83,14 +141,14 @@ const AddStaff = () => {
           type="text"
           placeholder={firstError ? "no name is inputed" : "input staff name"}
           value={staffName}
-          onChange={(ev) => setstaffName(ev.target.value)}
+          onChange={(ev) => setStaffName(ev.target.value)}
         />
         <h1 className="capitalize">staff class:</h1>
         <input
           type="text"
           placeholder={secondError ? "no class is inputed" : "input staff class"}
           value={staffClass}
-          onChange={(ev) => setstaffClass(ev.target.value)}
+          onChange={(ev) => setStaffClass(ev.target.value)}
         />
         <div className="flex gap-3 mt-2">
           <Upload uploadFile={uploadFile} isMultiple={false}/>
@@ -111,7 +169,7 @@ const AddStaff = () => {
         {message && <p>{message}</p>}
         <Button
           href="#"
-          children="add staff"
+          text={staffEditId !== "" ? "update staff info" : "add staff"}
           className="border-none mt-3"
           onClick={handleSubmit}
         />
