@@ -8,10 +8,8 @@ import AddVision from "../components/addSection/addVision";
 import withAuth from "../hoc/withAuth";
 
 
-const page = () => {
+const InformationPage = () => {
   const [actSwitch, setActSwitch] = useState({ first: true, second: false , third: false});
-  const [editId, setEditId] = useState<string>('')
-  const [reloadNews, setReloadNews] = useState<boolean>(false)
 
   const handleSwitch = (val: string) => {
     if(val === "first"){setActSwitch({ first: true, second: false, third:false})} else if (val === "second"){
@@ -50,4 +48,4 @@ const page = () => {
   );
 };
 
-export default withAuth(page);
+export default withAuth(InformationPage);
