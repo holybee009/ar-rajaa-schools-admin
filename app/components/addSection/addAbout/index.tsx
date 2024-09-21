@@ -29,7 +29,7 @@ const AddAbout = () => {
           onChange={(ev) => handleChange(ev)}
           className="mb-5"
         ></textarea>
-        <Button children="update about" href="#" onClick={handleUpdate}/>
+        <Button text="update about" href="#" onClick={handleUpdate}/>
         </div>
         </>
         
