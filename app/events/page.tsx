@@ -8,7 +8,7 @@ import EventData from "../components/updateData/eventData";
 import withAuth from "../hoc/withAuth";
 
 
-const eventPage = () => {
+const EventPage = () => {
   const [actSwitch, setActSwitch] = useState({ first: true, second: false });
   const [editEventId, setEditEventId] = useState<string>('')
   const [reloadEvent,setReloadEvent] = useState<boolean>(false)
@@ -44,4 +44,4 @@ const eventPage = () => {
   );
 };
 
-export default withAuth(eventPage);
+export default withAuth(EventPage);
