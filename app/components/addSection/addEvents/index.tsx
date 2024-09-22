@@ -1,118 +1,111 @@
-"use client"
-import react,{useState} from "react"
-import CalendarInputs from "../../miniComponents/caledarInputs"
-import Button from "../../atoms/button"
-import axios from "axios"
-import { API_BASE_URL } from "@/config"
+import React,{useState, useEffect} from "react";
+import Button from "../../atoms/button";
+import DatePickerComponent from "../../miniComponents/datePicker";
+import axios, {AxiosError} from "axios"
+import { API_BASE_URL } from "@/config";
 
+interface inputType {
+  eventName: string;
+  eventVenue: string;
+}
+interface errorType {
+  status: boolean;
+  message: string;
+}
+interface Props {
+  editEventId: string;
+  updateUI: () => void;
+}
+const AddEvents = ({editEventId, updateUI}: Props) => {
+  const [startDate, setStartDate] = useState<Date | null>(new Date())
+  const [eventsInputs, setEventsInputs] = useState<inputType>({eventName:"",eventVenue: ""})
+  const [firstError, setFirstError] = useState<errorType>({status:false,message:""})
+  const [secondError, setSecondError] = useState<errorType>({status:false,message:""})
+  
+  const handleChange = (
+    ev: React.ChangeEvent<HTMLInputElement>,
+    key: keyof inputType
+  ) => {
+    const value = ev.target.value;
+    setEventsInputs((prevState) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
 
-interface CalendarBlock {
-    selectedNumber: number,
-    startDate: Date | null,
-    endDate:  Date | null,
-    scheduleName: string
+const submitEventInfo = async () =>{
+const eventDetails = {...eventsInputs, startDate}
+if (eventsInputs.eventName === ""){
+  setFirstError({status:true ,message:"this field is required"})
+} else if (eventsInputs.eventVenue === ""){
+  setSecondError({status: true,message:"this field is required"})
+} else {
+  try {
+    if (editEventId !== ""){
+      const response = await axios.put(`${API_BASE_URL}/event`, { editEventId, ...eventDetails });
+      alert(response.data);
+      updateUI()
+    } else {
+      const res = await axios.post(`${API_BASE_URL}/event`, eventDetails)
+      alert(res.data)
+      updateUI()
+    }
+  } catch (error) {
+    // Type assertion to AxiosError
+    const axiosError = error as AxiosError;
+
+    if (axiosError.response) {
+      // Server responded with a status code that falls out of the range of 2xx
+      console.log(axiosError.response.data);
+      alert(axiosError.response.data);
+    } else if (axiosError.request) {
+      // Request was made but no response was received
+      console.log(axiosError.request);
+      alert("No response received from server");
+    } else {
+      // Something happened in setting up the request that triggered an error
+      console.log('Error', axiosError.message);
+      alert(axiosError.message);
+    } 
+  } finally {
+    setEventsInputs({ eventName: "", eventVenue: "" });
+  }
+}
 }
 
-const AddCalender = () =>{
-    const [newChildren, setNewChildren] = useState<number[]>([1]);
-    const [eachData, setEachData] = useState<CalendarBlock>()
-    const [calendarError, setCalendarError] = useState<boolean>(false) 
-    const [message, setMessage] = useState('');
-    const [calendarData, setCalendarData] = useState<CalendarBlock[]>([{selectedNumber: 0,startDate:null, endDate:null, scheduleName:""}])
-    
-     // session determination handler
-  const currentYear: number = new Date().getFullYear(); // Get the current year
-  const [selectedYear, setSelectedYear] = useState<string>(`${currentYear}/${currentYear + 1}`);
- 
-  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedYear(e.target.value);
-  };
- 
-  // Generate an array of academic years (e.g., 2000/2001 to currentYear/currentYear + 1)
-  const generateAcademicYears = (startYear: number): string[] => {
-    const academicYears: string[] = [];
-    for (let year = startYear; year <= currentYear; year++) {
-      academicYears.push(`${year}/${year + 1}`);
-    }
-    return academicYears;
-  };
- 
-  const academicYears: string[] = generateAcademicYears(2000); // Start from the year 2000
+useEffect(()=>{setEventsInputs({
+  eventName: "",eventVenue:""
+})},[])
 
-    // setting the calendar data array
-    const scheduleData = (index:number, selectedNumber:number, startDate:Date| null, endDate: Date | null, scheduleName:string) =>{
-        setEachData({selectedNumber,startDate,endDate,scheduleName})
-        setCalendarData((prevValues) => {
-            const updatedValues = [...prevValues];
-            updatedValues[index] = { selectedNumber,startDate, endDate, scheduleName  };
-            return updatedValues;
-          });    
-    }
+useEffect(() => {
+  if (!editEventId) {
+    return;
+  }
 
-    // add new child component
-    const addNewChild = () => {
-        if (eachData === undefined){
-            setCalendarError(true)
-        } else if ( eachData !== undefined ) {
-            if(eachData.scheduleName === "") {
-                setCalendarError(true)
-            } else {
-                setNewChildren([...newChildren, newChildren.length + 1]); // Add a new child based on the current length of the array
-                setCalendarData([...calendarData, { selectedNumber: 0,startDate:null, endDate:null, scheduleName:"" }]);  
-            }
-        }
-      };
+  axios.get(`${API_BASE_URL}/event` + editEventId).then((response) => {
+    const { data } = response;
+    console.log(data);
+    setEventsInputs({ eventName: data?.eventName, eventVenue: data?.eventVenue });
+    setStartDate(data.date);
+  });
+}, [editEventId, setEventsInputs, setStartDate]); // Include missing dependencies
 
-      console.log(calendarData);
-      
-    //   post school calendar
-    const addSchoolCalendar = async () =>{
 
-        try{
-            const response = await axios.post(`${API_BASE_URL}/calendar`, {selectedYear, calendarData})
-            console.log(response.data)
-                // Handle successful response
-            setMessage(response.data);
-            } catch (error: any) {
-            // Handle error
-            if (error.response) {
-                // Server responded with a status other than 200 range
-                setMessage(error.response.data.message);
-            } else {
-                // Something else happened while setting up the request
-                setMessage('Failed to upload calendar');
-            }
-            } finally {
-                setCalendarData([{selectedNumber: 0,startDate:null, endDate:null, scheduleName:""}])
-            }
-    }
-      
-    return(
-        <>
-        <div>
-        <div className="text-center capitalize underline mb-2">
-            <select id="academicYear" value={selectedYear} onChange={handleYearChange}>
-              {academicYears.map((academicYear) => (
-                <option key={academicYear} value={academicYear}>
-                  {academicYear}
-                </option>
-              ))}
-            </select>
-            <span> academic session</span>
-        </div>
-        <div className="w-full h-mobileScroll sm:h-64 p-4 overflow-y-auto custom-scrollbar">
-          {newChildren.map((child, index) => (
-            <CalendarInputs key={index} index={index} scheduleData={scheduleData} error={calendarError}/>
-          ))}
-        </div>
-      </div>
-        <Button href="#" text="add new schedule" className="capitalize cursor-pointer border-[#00000080]"
-            color="#000"       // Black text color
-            bgColor="#fff" onClick={addNewChild}/>
-        {message && <div className="mt-4 text-red-500">{message}</div>}
-        <Button href="#" text="add school calendar" className="absolute bottom-3 w-full inset-x-0" onClick={addSchoolCalendar}/>
-        </>
-    )
-}
+  return (
+    <div>
+      <p className="capitalize">event name</p>
+      <input type="text" placeholder={firstError.status === true ? firstError.message : "event title"} 
+      value={eventsInputs.eventName} 
+      onChange={(ev) => handleChange(ev, "eventName")}/>
+      <p className="capitalize">event venue</p>
+      <input type="text" placeholder={secondError.status === true ? secondError.message : "event venue"}  
+      value={eventsInputs.eventVenue} 
+      onChange={(ev) => handleChange(ev, "eventVenue")}/>
+      <p className="capitalize">event date</p>
+      <DatePickerComponent onChange={(date: Date | null) => setStartDate(date)} selected={startDate}/>
+      <Button text={editEventId === "" ? "add event" : "update event"} href="#" onClick={submitEventInfo}/>
+    </div>
+  );
+};
 
-export default AddCalender;
+export default AddEvents;
