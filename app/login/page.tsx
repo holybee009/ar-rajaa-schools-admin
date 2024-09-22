@@ -153,8 +153,7 @@ const LoginPage: React.FC = () => {
         <Button
           href="#"
           text="log in"
-          color="#EE3A57"
-          className="capitalize border-none text-[white] w-full mt-3"
+          className="capitalize border-none mt-3"
           onClick={loginAdmin}
         />
       </div>
