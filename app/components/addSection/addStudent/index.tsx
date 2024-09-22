@@ -69,7 +69,7 @@ useEffect(() => {
      setStudentClass(data.studentClass)
      setUploadedFileUrl(data.uploadedFileUrl)
     })
-  },[studentEditId !== ""])
+  },[studentEditId,setSelectedYear,setStudentName, setStudentClass, setUploadedFileUrl])
 
 //   submit student details
   const handleSubmit = async () => {
