@@ -93,7 +93,7 @@ const onData = (val:string) =>{
     setStudentData(studentClasses)
   }
   fetchData()
- },[updateClass])
+ },[updateClass, fetchData])
 
 
  
