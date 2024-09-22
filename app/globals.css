@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+input[type="text"],
+input[type="password"] {
+  @apply w-full border py-2 px-2 rounded-full mb-3;
+}
+textarea {
+  @apply w-full border py-2 px-2 h-20;
+}
