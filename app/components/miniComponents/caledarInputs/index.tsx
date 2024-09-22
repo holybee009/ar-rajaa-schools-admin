@@ -25,7 +25,7 @@ const CalendarInputs = ({scheduleData, error,index}: Props)  =>{
  // Memoize the scheduleData function using useCallback
  const memoizedScheduleData = useCallback(() => {
     scheduleData(index, selectedNumber, startDate, endDate, scheduleName);
-  }, [index, selectedNumber, startDate, endDate, scheduleName]); // Add dependencies here
+  }, [index, selectedNumber, startDate, endDate, scheduleName, scheduleData]); // Add dependencies here
 
   // useEffect that triggers the memoizedScheduleData function when dependencies change
   useEffect(() => {
