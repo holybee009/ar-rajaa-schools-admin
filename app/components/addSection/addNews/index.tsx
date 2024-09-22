@@ -174,7 +174,7 @@ const AddNews = ({editId , updateUI}: Props) => {
           onClick={authentication ? () => setShowModal(true) : handleAuthentication}
         />
         <Modal show={showModal} onClose={() => setShowModal(false)}>
-          <Preview title={newsData.title} content={newsData.content} src={addedPhotos} onClick={submitNews} children={editId === "" ? "post news" : "update news"}/>
+          <Preview title={newsData.title} content={newsData.content} src={addedPhotos} onClick={submitNews} prevText={editId === "" ? "post news" : "update news"}/>
         </Modal>
       </div>
     </>
