@@ -94,7 +94,7 @@ useEffect(() => {
   };
 
   fetchData();
-}, [updateClass, setStaffData]); // Add setStaffData as a dependency
+}, [updateClass, setStaffData, fetchData]); // Add setStaffData as a dependency
 
 
  
