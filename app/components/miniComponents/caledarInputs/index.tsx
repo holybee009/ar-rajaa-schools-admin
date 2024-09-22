@@ -30,8 +30,8 @@ const CalendarInputs = ({scheduleData, error,index}: Props)  =>{
   // useEffect that triggers the memoizedScheduleData function when dependencies change
   useEffect(() => {
     memoizedScheduleData(); // Call the memoized function
-  }, [memoizedScheduleData]); // Use the memoized function as a dependency
-  
+  }, [memoizedScheduleData, scheduleData]); // Use the memoized function as a dependency
+
     return (
       <>
       <div className="block lg:flex gap-4">
