@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['localhost'],
+        domains: ['ar-rajaa-schools-backend.onrender.com'],
       },
 };
 
