@@ -151,7 +151,7 @@ const AddNews = ({editId , updateUI}: Props) => {
           <div className="hidden">
           <DatePickerComponent onChange={(date: Date | null) => setStartDate(date)} selected={startDate} />
           </div>
-          <div className="flex gap-8 items-center">
+          <div className="flex gap-3 mt-2">
           <Upload uploadFile={uploadFile} isMultiple={false}/>
           {addedPhotos ? (
              <div className="relative w-1/5 h-20"> 
