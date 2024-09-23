@@ -154,7 +154,7 @@ const AddNews = ({editId , updateUI}: Props) => {
           <div className="flex gap-3 mt-2">
           <Upload uploadFile={uploadFile} isMultiple={false}/>
           {addedPhotos ? (
-             <div className="relative w-1/5 h-20"> 
+             <div className="relative w-14 h-20"> 
              <Image
                  src={addedPhotos}
                  alt="Description"
