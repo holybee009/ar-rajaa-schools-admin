@@ -22,7 +22,6 @@ const AddNews = ({editId , updateUI}: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [newsData, setNewsData] = useState({ title: "", content: "" });
   const [addedPhotos, setAddedPhotos] = useState<string>("")
-  const [authentication , setAuthentication] = useState<boolean>(false)
   const [firstMessage, setFirstMessage] = useState<string>("");
   const [secondMessage, setSecondMessage] = useState<string>("");
   const [thirdMessage, setThirdMessage] = useState<string>("");
@@ -69,7 +68,7 @@ const AddNews = ({editId , updateUI}: Props) => {
     } else if (addedPhotos === ""){
       setThirdMessage("this field is required")
     } else {
-     setAuthentication(true)
+     setShowModal(true)
     }
   }
     // news data submission
@@ -171,7 +170,7 @@ const AddNews = ({editId , updateUI}: Props) => {
           href="#"
           text="preview"
           className="border-none mt-3"
-          onClick={authentication ? () => setShowModal(true) : handleAuthentication}
+          onClick={handleAuthentication}
         />
         <Modal show={showModal} onClose={() => setShowModal(false)}>
           <Preview title={newsData.title} content={newsData.content} src={addedPhotos} onClick={submitNews} prevText={editId === "" ? "post news" : "update news"}/>
