@@ -11,7 +11,8 @@ interface DropDown {
 }
 const Dropdown:React.FC<DropDown> = ({isOpen,selectedTerm,handleSelect,toggleDropdown}) => {
   return (
-    <div className="relative inline-block text-left ml-36">
+    <div className="flex justify-center items-center">
+    <div className="relative inline-block text-left">
       <button
         type="button"
         onClick={toggleDropdown}
@@ -51,6 +52,7 @@ const Dropdown:React.FC<DropDown> = ({isOpen,selectedTerm,handleSelect,toggleDro
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };
