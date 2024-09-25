@@ -72,8 +72,8 @@ const LoginPage: React.FC = () => {
       setSecondInputError({ state: true, message: "this field is required" });
     } else if (loginInput.username !== "" && loginInput.password !== "") {
       try {
-        const response = await axios.post(`${API_BASE_URL}/login`, loginInput);
         setAuthenticated(true);
+        const response = await axios.post(`${API_BASE_URL}/login`, loginInput);
         alert(response.data.message)
         console.log(response);
         
