@@ -4,6 +4,7 @@ import CalendarInputs from "../../miniComponents/caledarInputs"
 import Button from "../../atoms/button"
 import axios from "axios"
 import { API_BASE_URL } from "@/config"
+import Dropdown from "../../miniComponents/dropDown"
 import './customScrollbar.css';
 
 interface CalendarBlock {
@@ -19,6 +20,17 @@ const AddCalender = () =>{
     const [calendarError, setCalendarError] = useState<boolean>(false) 
     const [message, setMessage] = useState('');
     const [calendarData, setCalendarData] = useState<CalendarBlock[]>([{selectedNumber: 0,startDate:null, endDate:null, scheduleName:""}])
+    const [selectedTerm, setSelectedTerm] = useState("First Term");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleSelect = (term: string) => {
+    setSelectedTerm(term);
+    setIsOpen(false); // Close the dropdown after selecting
+  };
     
      // session determination handler
   const currentYear: number = new Date().getFullYear(); // Get the current year
@@ -63,13 +75,12 @@ const AddCalender = () =>{
         }
       };
 
-      console.log(calendarData);
       
     //   post school calendar
     const addSchoolCalendar = async () =>{
 
         try{
-            const response = await axios.post(`${API_BASE_URL}/calendar`, {selectedYear, calendarData})
+            const response = await axios.post(`${API_BASE_URL}/calendar`, {selectedYear,term: selectedTerm, calendarData})
             console.log(response.data)
                 // Handle successful response
             setMessage(response.data);
@@ -100,6 +111,7 @@ const AddCalender = () =>{
             </select>
             <span> academic session</span>
         </div>
+        <Dropdown isOpen={isOpen} toggleDropdown={toggleDropdown} handleSelect={handleSelect} selectedTerm={selectedTerm} />
         <div className="w-full h-mobileScroll sm:h-64 p-4 overflow-y-auto custom-scrollbar">
           {newChildren.map((child, index) => (
             <CalendarInputs key={index} index={index} scheduleData={scheduleData} error={calendarError}/>
