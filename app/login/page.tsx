@@ -100,6 +100,8 @@ const LoginPage: React.FC = () => {
           console.log('Error', axiosError.message);
           alert(axiosError.message);
         }
+      } finally {
+        setAuthenticated(false)
       }
     }
   };
@@ -152,7 +154,7 @@ const LoginPage: React.FC = () => {
         </div>
         <Button
           href="#"
-          text="log in"
+          text={authenticated ? "logging in ...." : "log in"}
           className="capitalize border-none mt-3"
           onClick={loginAdmin}
         />
