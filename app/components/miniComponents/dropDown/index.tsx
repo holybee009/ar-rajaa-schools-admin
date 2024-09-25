@@ -25,7 +25,7 @@ const Dropdown:React.FC<DropDown> = ({isOpen,selectedTerm,handleSelect,toggleDro
       </button>
 
       {isOpen && (
-        <div className="origin-center absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="origin-center z-50 absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1" role="menu" aria-orientation="vertical">
             <button
               onClick={() => handleSelect("First Term")}
