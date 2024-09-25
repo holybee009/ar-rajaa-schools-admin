@@ -73,7 +73,7 @@ const AddNews = ({editId , updateUI}: Props) => {
   }
     // news data submission
     const submitNews = async () => {
-      const newsInfo = { ...newsData, newsPhoto: addedPhotos };
+      const newsInfo = { ...newsData, newsPhoto: addedPhotos, startDate };
     
       try {
         if (editId !== "") {
