@@ -116,6 +116,7 @@ const CalendarData = () => {
 
     return (
         <>
+            <div>
         {calendarDisplay ? <div>
               {loading ? (
         <p>Loading...</p>
@@ -157,7 +158,7 @@ const CalendarData = () => {
         <p>No calendar yet</p>
       )}
         </div> : {terms ? <Terms onSelectTerm={handleSelectTerm}/> : <AcademicSessions showClasses={showCalendar} textTitle="school calendars"/>}
-       
+       </div>
         </>
     )
 }
