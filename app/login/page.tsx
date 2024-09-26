@@ -154,7 +154,7 @@ const LoginPage: React.FC = () => {
         </div>
         <Button
           href="#"
-          text={authenticated ? "logging in ...." : "log in"}
+          text={authenticated ? "logging in....." : "log in"}
           className="capitalize border-none mt-3"
           onClick={loginAdmin}
         />
