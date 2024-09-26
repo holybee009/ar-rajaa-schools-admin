@@ -6,6 +6,7 @@ import { API_BASE_URL } from "@/config";
 import CalendarBlock from "../../miniComponents/calendarBlock";
 import Button from "../../atoms/button";
 import Modal from "../../miniComponents/modal";
+import Terms from "../../miniComponents/terms"
 
 interface Data{
     _id:string
@@ -22,14 +23,21 @@ const CalendarData = () => {
     const [error, setError] = useState<string | null>(null);
     const [deleteConfirmation, setDeleteConfirmation] = useState<boolean>(false)
     const [value, setValue] = useState<string>("")
+    const [terms, setTerms] = useState<boolean>(false)
+    const [yearValue, setYearValue] = useState<string>("")
 
 
     // show calenders
-    const showCalendar = async (val:string) =>{
+    const showCalendar = (val:string) =>{
+        setYearValue(val)
+        setTerms(true)
+    }
+
+    const handleSelectTerm = async (term: string) => {
         setCalendarDisplay(true)
         try {
             const response = await axios.get(`${API_BASE_URL}/calendar`, {
-              params: { selectedYear : val},
+              params: { selectedYear : yearValue, term},
             });
             setResults(response.data);
           }  catch (error) {
@@ -43,8 +51,8 @@ const CalendarData = () => {
             } finally {
             setLoading(false);
            }
-    }
-
+  };
+  
         // for getting the desired date format
         const getFormattedDate = (value:string) =>{
             const isoDateString: string = value;
@@ -148,7 +156,7 @@ const CalendarData = () => {
       ) : (
         <p>No calendar yet</p>
       )}
-        </div> :  <AcademicSessions showClasses={showCalendar} textTitle="school calendars"/>}
+        </div> : {terms ? <Terms onSelectTerm={handleSelectTerm}/> : <AcademicSessions showClasses={showCalendar} textTitle="school calendars"/>}
        
         </>
     )
