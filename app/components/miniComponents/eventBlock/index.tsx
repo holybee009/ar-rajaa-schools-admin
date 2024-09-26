@@ -30,7 +30,7 @@ const EventBlock = ({event,venue,date, onDeleteEventClick,onEditEventClick}:Prop
             <div className="w-1/2 text-center capitalize text-xs sm:text-sm md:text-base">{venue}</div>
             <div className="w-1/2 text-right text-xs sm:text-sm md:text-base">{date}</div>
             </div>
-            <Image src={Ellipse} alt="ellipse" width={30} height={30} className="absolute top-2 -right-3 w-6 h-6 sm:w-16 sm:h-16"  onClick={() => setconfigure(true)} />
+            <Image src={Ellipse} alt="ellipse" width={30} height={30} className="absolute top-2 -right-3 w-6 h-6 sm:w-10 sm:h-10"  onClick={() => setconfigure(true)} />
            {configure && 
            <div className="absolute top-0 right-2 bg-[#FBE4E7] rounded-xl shadow shadow-sm">
             <div className="flex relative gap-2 p-4 pt-7">
