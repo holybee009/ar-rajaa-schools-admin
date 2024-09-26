@@ -158,7 +158,7 @@ const CalendarData = () => {
         <p>No calendar yet</p>
       )}
         </div> : <div> {terms ? <Terms onSelectTerm={handleSelectTerm}/> : <AcademicSessions showClasses={showCalendar} textTitle="school calendars"/>}
-       </div>
+       </div>}
         </div>
         </>
     )
