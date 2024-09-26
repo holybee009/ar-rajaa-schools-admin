@@ -16,7 +16,15 @@ const Preview = ({ title, content, src , onClick,prevText }: Props) => {
     <div>
       <h1 className="text-bold capitalize mb-2">{title}</h1>
       <Image src={src} alt="news image" width={100} height={100} className="mb-2"/>
-      <p className="mb-2 text-sm sm:text-auto first-letter:capitalize "><span className="p-2"></span>{content}</p>
+            <div>
+            {content.split('\n').map((paragraph:string, index:number) => (
+                paragraph.trim() && (  // Ensure we don't create empty paragraphs
+                <p key={index} className="mb-4">
+                    {paragraph}
+                </p>
+                )
+            ))}
+        </div>
       <Button href="#" text={prevText} onClick={onClick} />
     </div>
   );
