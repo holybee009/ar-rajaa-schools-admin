@@ -1,1 +1,42 @@
-posting something soon
+/* Custom Scrollbar Styles for Desktop */
+
+/* Scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Background of the scrollbar track */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the draggable scrollbar part (thumb) */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 2px solid #f1f1f1; /* Adds space around the thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Change color when hovering */
+}
+
+/* Firefox scrollbar styles */
+.custom-scrollbar {
+  scrollbar-width: thin; /* Sets the scrollbar width */
+  scrollbar-color: #888 #f1f1f1; /* Thumb color and track color */
+}
+
+/* Mobile Styles: Hide the scrollbar but allow scrolling */
+@media (max-width: 640px) {
+  .custom-scrollbar::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for mobile devices */
+  }
+  .custom-scrollbar {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* Add smooth scrolling */
+.custom-scrollbar {
+  scroll-behavior: smooth;
+}
