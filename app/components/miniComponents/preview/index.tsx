@@ -14,6 +14,7 @@ interface Props {
 const Preview = ({ title, content, src , onClick,prevText }: Props) => {
   return (
     <div>
+      <div className="w-full h-mobileScroll sm:h-64 p-4 overflow-y-auto custom-scrollbar">
       <h1 className="text-bold capitalize mb-2">{title}</h1>
       <Image src={src} alt="news image" width={100} height={100} className="mb-2"/>
             <div>
@@ -25,6 +26,7 @@ const Preview = ({ title, content, src , onClick,prevText }: Props) => {
                 )
             ))}
         </div>
+       </div>
       <Button href="#" text={prevText} onClick={onClick} />
     </div>
   );
