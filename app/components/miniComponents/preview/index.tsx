@@ -2,6 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Button from "../../atoms/button";
+import './customScrollbar.css';
 
 interface Props {
   title: string;
